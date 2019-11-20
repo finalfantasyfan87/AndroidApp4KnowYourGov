@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/about"
-    tools:context=".AboutActivity">
+    tools:context="com.csc472.hw4knowyourgov.activity.AboutActivity">
 
     <TextView
         android:id="@+id/title"

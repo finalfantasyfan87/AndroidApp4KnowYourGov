@@ -31,6 +31,7 @@ import com.csc472.hw4knowyourgov.adapter.OfficialAdapter;
 import com.csc472.hw4knowyourgov.model.GoogleCivicAPI;
 import com.csc472.hw4knowyourgov.model.Official;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -126,11 +127,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void setOfficialList(Object[] parsed) {
-        if(parsed != null) {
-            zipcode = (String) parsed[0];
+    public void setOfficialList(Object[] parseJson) {
+        if(parseJson != null) {
+            zipcode = (String) parseJson[0];
             listOfOfficials.clear();
-            ArrayList<Official> officialsParsed = (ArrayList<Official>) parsed[1];
+            ArrayList<Official> officialsParsed = (ArrayList<Official>) parseJson[1];
             listOfOfficials.addAll(officialsParsed);
 
             officialAdapter.notifyDataSetChanged();

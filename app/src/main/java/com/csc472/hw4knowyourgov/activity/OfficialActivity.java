@@ -48,17 +48,17 @@ public class OfficialActivity extends AppCompatActivity {
         locationTextView = findViewById(R.id.location);
         officeTextView = findViewById(R.id.office);
         nameTextView = findViewById(R.id.name);
-        politicalParty = findViewById(R.id.party);
+        politicalParty = findViewById(R.id.politicalParty);
         addressTextView = findViewById(R.id.address);
         phoneTextView = findViewById(R.id.phone);
         emailTextView = findViewById(R.id.email);
-        urlTextView = findViewById(R.id.url);
+        urlTextView = findViewById(R.id.website);
 
-        photo = findViewById(R.id.photo);
+        photo = findViewById(R.id.pic);
         googlePlus = findViewById(R.id.googlePlus);
         facebook = findViewById(R.id.facebook);
         twitter = findViewById(R.id.twitter);
-        youTube = findViewById(R.id.youTube);
+        youTube = findViewById(R.id.youtube);
 
 
         Intent intent = getIntent();
@@ -138,7 +138,7 @@ public class OfficialActivity extends AppCompatActivity {
         Log.d(TAG, "openPhotoActivity: ");
         if (official.getPhotoUrl().equals(DEFAULT))
             return;
-        Intent intent = new Intent(OfficialActivity.this, PhotoDetailActivity.class);
+        Intent intent = new Intent(OfficialActivity.this, PhotoActivity.class);
         intent.putExtra("addressTextView", locationTextView.getText().toString());
         intent.putExtra("official", String.valueOf(official));
         startActivity(intent);

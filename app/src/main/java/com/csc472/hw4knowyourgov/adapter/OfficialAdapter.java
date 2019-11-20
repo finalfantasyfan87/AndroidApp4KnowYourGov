@@ -13,11 +13,11 @@ import com.csc472.hw4knowyourgov.model.Official;
 import java.util.List;
 
 public class OfficialAdapter extends RecyclerView.Adapter<OfficialViewHolder> {
-    private List<Official> list;
+    private List<Official> listOfOfficials;
     private MainActivity mainActivity;
 
     public OfficialAdapter (List<Official> officialList, MainActivity activity){
-        this.list = officialList;
+        this.listOfOfficials = officialList;
         mainActivity = activity;
     }
 
@@ -32,13 +32,13 @@ public class OfficialAdapter extends RecyclerView.Adapter<OfficialViewHolder> {
 
     @Override
     public void onBindViewHolder(OfficialViewHolder holder, int position) {
-        Official official = list.get(position);
+        Official official = listOfOfficials.get(position);
         holder.office.setText(official.getOffice());
         holder.nameParty.setText(official.getName() + " (" + official.getParty() + ")");
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return listOfOfficials.size();
     }
 }
