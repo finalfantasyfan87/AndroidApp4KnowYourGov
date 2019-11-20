@@ -182,29 +182,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean amIConnected(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
-
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return (connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null) != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
-    private void noNetworkConnection(){
-        location.setText("No Data For Location");
+    private void noNetworkConnection() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // Do nothing
-            }
-        });
-        builder.setMessage("Data cannot be accessed/loaded without a network connection.");
         builder.setTitle("No Network Connection");
+        builder.setMessage("Data cannot Be accessed/loaded \nwithout an internet connection.");
+
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
 
     @Override
     protected void onDestroy() {
