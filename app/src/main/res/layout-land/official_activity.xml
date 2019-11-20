@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Official_Background"
+    android:id="@+id/appBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.csc472.hw4knowyourgov.activity.OfficialActivity">
@@ -64,12 +64,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/office" />
 
             <TextView
-                android:id="@+id/Party"
+                android:id="@+id/politicalParty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Party"
+                android:text="politicalParty"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
@@ -78,7 +78,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/office" />
 
             <ImageButton
-                android:id="@+id/Picture"
+                android:id="@+id/pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -88,23 +88,23 @@
                 android:onClick="openPhotoActivity"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline8"
-                app:layout_constraintTop_toBottomOf="@+id/Party"
+                app:layout_constraintTop_toBottomOf="@+id/politicalParty"
                 app:srcCompat="@drawable/brokenimage" />
 
             <TextView
-                android:id="@+id/headerAddress"
+                android:id="@+id/headeraddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Address:"
+                android:text="address:"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline7"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/Address" />
+                app:layout_constraintTop_toTopOf="@+id/address" />
 
             <TextView
-                android:id="@+id/Address"
+                android:id="@+id/address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -116,68 +116,68 @@
                 app:layout_constraintTop_toBottomOf="@+id/name" />
 
             <TextView
-                android:id="@+id/headerPhone"
+                android:id="@+id/phoneHeader"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:text="Phone:"
+                android:text="phone:"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline7"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/Phone" />
+                app:layout_constraintTop_toTopOf="@+id/phone" />
 
             <TextView
-                android:id="@+id/Phone"
+                android:id="@+id/phone"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:text="TextView"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline8"
-                app:layout_constraintStart_toEndOf="@+id/headerPhone"
-                app:layout_constraintTop_toBottomOf="@+id/Address" />
+                app:layout_constraintStart_toEndOf="@+id/phoneHeader"
+                app:layout_constraintTop_toBottomOf="@+id/address" />
 
             <TextView
-                android:id="@+id/headerEmail"
+                android:id="@+id/emailHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Email:"
+                android:text="email:"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline7"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/Email" />
+                app:layout_constraintTop_toTopOf="@+id/email" />
 
             <TextView
-                android:id="@+id/Email"
+                android:id="@+id/email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline8"
-                app:layout_constraintStart_toEndOf="@+id/headerEmail"
-                app:layout_constraintTop_toBottomOf="@+id/Phone" />
+                app:layout_constraintStart_toEndOf="@+id/emailHeader"
+                app:layout_constraintTop_toBottomOf="@+id/phone" />
 
             <TextView
-                android:id="@+id/headerWebsite"
+                android:id="@+id/websiteHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Website:"
+                android:text="website:"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/Website"
+                app:layout_constraintEnd_toStartOf="@+id/website"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/Website" />
+                app:layout_constraintTop_toTopOf="@+id/website" />
 
             <TextView
-                android:id="@+id/Website"
+                android:id="@+id/website"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -185,35 +185,35 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline8"
                 app:layout_constraintStart_toStartOf="@+id/guideline7"
-                app:layout_constraintTop_toBottomOf="@+id/Email" />
+                app:layout_constraintTop_toBottomOf="@+id/email" />
 
             <ImageButton
-                android:id="@+id/Youtube"
+                android:id="@+id/youtube"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:background="@android:color/transparent"
-                android:onClick="youtubeClick"
+                android:onClick="onYoutubeClick"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toStartOf="@+id/guideline5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Picture"
+                app:layout_constraintTop_toBottomOf="@+id/pic"
                 app:srcCompat="@drawable/youtube" />
 
             <ImageButton
-                android:id="@+id/GooglePlus"
+                android:id="@+id/googlePlus"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:background="@android:color/transparent"
-                android:onClick="googleClick"
+                android:onClick="onGooglePlusClick"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toStartOf="@+id/guideline8"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="@+id/Youtube"
+                app:layout_constraintTop_toTopOf="@+id/youtube"
                 app:srcCompat="@drawable/googleplus" />
 
             <ImageButton
@@ -221,7 +221,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@android:color/transparent"
-                android:onClick="twitterClick"
+                android:onClick="onTwitterClick"
                 android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -235,11 +235,11 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:background="@android:color/transparent"
-                android:onClick="facebookClick"
+                android:onClick="onFacebookClick"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toStartOf="@+id/guideline6"
                 app:layout_constraintStart_toStartOf="@+id/guideline8"
-                app:layout_constraintTop_toTopOf="@+id/GooglePlus"
+                app:layout_constraintTop_toTopOf="@+id/googlePlus"
                 app:srcCompat="@drawable/facebook" />
 
             <android.support.constraint.Guideline

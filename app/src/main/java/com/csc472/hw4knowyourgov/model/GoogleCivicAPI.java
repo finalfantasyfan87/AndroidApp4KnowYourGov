@@ -35,8 +35,8 @@ public class GoogleCivicAPI  extends AsyncTask<String, Void, String> {
 
     private MainActivity mainActivity;
 
-    public GoogleCivicAPI(MainActivity ma) {
-        this.mainActivity = ma;
+    public GoogleCivicAPI(MainActivity activity) {
+        this.mainActivity = activity;
     }
 
 

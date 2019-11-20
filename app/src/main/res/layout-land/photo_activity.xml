@@ -5,7 +5,7 @@
     android:id="@+id/Official_Background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.csc472.hw4knowyourgov.PhotoActivity">
+    tools:context="com.csc472.hw4knowyourgov.activity.PhotoActivity">
 
     <TextView
         android:id="@+id/location"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Office"
+        android:id="@+id/office"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -34,13 +34,13 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Name"
+        app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/Name"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/Picture"
+        android:id="@+id/pic"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"

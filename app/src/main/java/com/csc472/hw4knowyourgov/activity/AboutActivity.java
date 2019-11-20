@@ -1,4 +1,15 @@
 package com.csc472.hw4knowyourgov.activity;
 
-public class AboutActivity {
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.csc472.hw4knowyourgov.R;
+
+public class AboutActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.about_activity);
+    }
 }

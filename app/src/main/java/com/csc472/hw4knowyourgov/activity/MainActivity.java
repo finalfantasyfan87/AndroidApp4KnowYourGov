@@ -97,34 +97,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(abt);
                 return true;
             case R.id.zipCode:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                final EditText et = new EditText(this);
-                final MainActivity ma = this;
-                et.setInputType(InputType.TYPE_CLASS_TEXT);
-                et.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
-                et.setGravity(Gravity.CENTER_HORIZONTAL);
-
-                builder.setView(et);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        zipcode = et.getText().toString();
-                        new GoogleCivicAPI(ma).execute(zipcode);
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-
-                builder.setMessage("Enter a City, State or a Zip Code: ");
-                builder.setTitle("Government Location");
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                displayDialog();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void displayDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        final EditText dialogText = new EditText(getApplicationContext());
+        final MainActivity currentActivity = this;
+        dialogText.setInputType(InputType.TYPE_CLASS_TEXT);
+        dialogText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        dialogText.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        builder.setView(dialogText);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                zipcode = dialogText.getText().toString();
+                new GoogleCivicAPI(currentActivity).execute(zipcode);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        builder.setMessage("Enter a City, State or a Zip Code: ");
+        builder.setTitle("Government Location");
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void setOfficialList(Object[] parseJson) {
@@ -145,9 +149,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == LOCATION_CODE) {
-            for (int i = 0; i < permissions.length; i++) {
-                if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+            int i = 0;
+            while (i < permissions.length) {
+                if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permissions[i])) {
+                    if (PackageManager.PERMISSION_GRANTED == grantResults[i]) {
                         locator.setUpLocationManager();
                         locator.findLocation();
                         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -155,29 +160,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(this, "Location permission was denied", Toast.LENGTH_LONG).show();
                     }
                 }
+                i++;
             }
         }
     }
 
     public void doLocationWork(double latitude, double longitude) {
         List<Address> locations;
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
-            locations = geocoder.getFromLocation(latitude, longitude, 1);
+            locations = new Geocoder(this, Locale.getDefault()).getFromLocation(latitude, longitude, 1);
             zipcode = locations.get(0).getPostalCode();
             new GoogleCivicAPI(this).execute(zipcode);
         } catch (IOException e) {
-            Toast.makeText(this, "Address can not be acquired from given location", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cannot Locate Address", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void noLocationAvailable() {
-        Toast.makeText(this, "Location not available", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Location is unavailable", Toast.LENGTH_LONG).show();
     }
 
     private boolean amIConnected(){
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
 
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
             return true;
