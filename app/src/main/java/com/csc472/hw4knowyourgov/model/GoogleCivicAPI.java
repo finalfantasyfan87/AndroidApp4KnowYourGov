@@ -195,9 +195,6 @@ public class GoogleCivicAPI  extends AsyncTask<String, Void, String> {
                     }
                 }
 
-                Log.d(TAG, "parseJSON: " + office + name + party + address + phone + email + url + photoUrl);
-                Log.d(TAG, "parseJSON: " + googlePlus + facebook + twitter + youTube);
-
                 officialResults.add(new Official(office, name, party, address, phone, email, url, photoUrl, googlePlus, facebook, twitter, youTube));
             }
         } catch (JSONException e) {
