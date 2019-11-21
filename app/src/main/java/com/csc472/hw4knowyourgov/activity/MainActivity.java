@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Official official = listOfOfficials.get(pos);
         Intent officialActivity = new Intent(this, OfficialActivity.class);
         officialActivity.putExtra("heading", location.getText());
-        officialActivity.putExtra("official", official.toString());
+        officialActivity.putExtra("official", official);
         startActivity(officialActivity);
     }
 
