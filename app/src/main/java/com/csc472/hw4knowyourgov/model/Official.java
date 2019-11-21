@@ -1,6 +1,8 @@
 package com.csc472.hw4knowyourgov.model;
 
-public class Official {
+import java.io.Serializable;
+
+public class Official implements Serializable {
     private String office;
     private String name;
     private String party;
