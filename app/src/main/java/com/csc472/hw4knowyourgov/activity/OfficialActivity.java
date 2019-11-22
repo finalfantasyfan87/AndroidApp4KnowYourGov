@@ -184,8 +184,8 @@ public class OfficialActivity extends AppCompatActivity {
     public void openPhotoActivity(View v){
         if(official.getPhotoUrl()!=null || !official.getPhotoUrl().isEmpty()){
             Intent photo = new Intent(this, PhotoActivity.class);
-            photo.putExtra("official",official.toString());
-            photo.putExtra("header",header.getText().toString());
+            photo.putExtra("official",official);
+            photo.putExtra("header",header.getText());
             startActivity(photo);
         } else{
             Log.d(TAG, "There is no data to post in the Photo Activity.");
@@ -215,12 +215,10 @@ public class OfficialActivity extends AppCompatActivity {
         Intent intent = null;
         String name = official.getTwitter();
         try {
-            // Twitter App
             getPackageManager().getPackageInfo("com.twitter.android", 0);
             intent = new Intent(Intent.ACTION_VIEW, parse("twitter://user?screen_name=" + name));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         } catch (Exception e) {
-            // Twitter Browser
             intent = new Intent(Intent.ACTION_VIEW, parse("https://twitter.com/" + name));
         }
         startActivity(intent);

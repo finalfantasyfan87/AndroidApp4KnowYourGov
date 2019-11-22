@@ -43,13 +43,13 @@ public class PhotoActivity extends AppCompatActivity {
         if(intent.hasExtra("official")){
             official = (Official) intent.getSerializableExtra("official");
             mapDataFields();
-            loadImage();
+            displayOfficialPic();
         }
     }
 
 
 
-    private void loadImage(){
+    private void displayOfficialPic(){
         final String officialPhotoUrl = official.getPhotoUrl();
         if (officialPhotoUrl != null) {
             Picasso picasso = new Picasso.Builder(this).listener(new Picasso.Listener() {
