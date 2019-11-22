@@ -10,6 +10,7 @@ import com.csc472.hw4knowyourgov.activity.MainActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -65,6 +66,10 @@ public class GoogleCivicAPI  extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
         String dataUrl = CIVIC_INFO_URL + strings[0];
+
+
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(CIVIC_INFO_URL+address, String.class);
         Uri dataUri = Uri.parse(dataUrl);
         String urlToUse = dataUri.toString();
         Log.d(TAG, "doInBackground: " + urlToUse);
