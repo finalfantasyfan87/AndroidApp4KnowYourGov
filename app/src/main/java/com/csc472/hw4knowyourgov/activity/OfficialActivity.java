@@ -80,10 +80,10 @@ public class OfficialActivity extends AppCompatActivity {
         mapFields(official);
         if(official.getParty().contains("Republican")){
             appBackground.setBackgroundColor(Color.RED);
-      //      logo.setImageResource(R.drawable.rep_logo);
+           logo.setImageResource(R.drawable.rep_logo);
         } else if(official.getParty().contains("Democrat") || official.getParty().contains("Democratic")){
             appBackground.setBackgroundColor(Color.BLUE);
-//            logo.setImageResource(R.drawable.dem_logo);
+          logo.setImageResource(R.drawable.dem_logo);
         } else {
             appBackground.setBackgroundColor(Color.BLACK);
         }
