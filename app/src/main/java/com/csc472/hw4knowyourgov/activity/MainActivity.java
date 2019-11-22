@@ -80,11 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
 
 
 
@@ -113,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
-    public void setOfficialList(Object[] jsonResults) {
+    public void updateOfficalList(Object[] jsonResults) {
         if(jsonResults != null) {
             listOfOfficials.clear();
             ArrayList<Official> officialsParsed = (ArrayList<Official>) jsonResults[1];
@@ -129,17 +124,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == LOCATION_CODE) {
             int i = 0;
-            while (i < permissions.length) {
-                if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permissions[i])) {
-                    if (PackageManager.PERMISSION_GRANTED == grantResults[i]) {
-                        locator.setUpLocationManager();
-                        locator.findLocation();
-                        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-                    } else {
-                        Toast.makeText(this, "Location permission was denied", Toast.LENGTH_LONG).show();
+            if (i < permissions.length) {
+                do {
+                    if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permissions[i])) {
+                        if (PackageManager.PERMISSION_GRANTED == grantResults[i]) {
+                            locator.setUpLocationManager();
+                            locator.findLocation();
+                            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                        } else {
+                            Toast.makeText(this, "Location permission was denied", Toast.LENGTH_LONG).show();
+                        }
                     }
-                }
-                i++;
+                    i++;
+                } while (i < permissions.length);
             }
         }
     }
@@ -172,6 +169,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showNoLocationToast() {
         Toast.makeText(this, "Location is unavailable", Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){

@@ -10,6 +10,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,6 +39,7 @@ public class OfficialActivity extends AppCompatActivity {
     private ImageButton youtube;
     private ImageButton googleplus;
     private ConstraintLayout appBackground;
+    private ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class OfficialActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         website = findViewById(R.id.website);
         picture = findViewById(R.id.pic);
+        logo = findViewById(R.id.logo);
         facebook = findViewById(R.id.facebook);
         twitter = findViewById(R.id.twitter);
         youtube = findViewById(R.id.youtube);
@@ -66,7 +69,7 @@ public class OfficialActivity extends AppCompatActivity {
         if(intent.hasExtra("official")){
             official = (Official) intent.getSerializableExtra("official");
             mapOfficialFields(official);
-            getOfficalPicture();
+            getOfficialPicture();
         }
     }
 
@@ -74,60 +77,83 @@ public class OfficialActivity extends AppCompatActivity {
         office.setText(official.getOffice());
         name.setText(official.getName());
         party.setText("("+official.getParty()+")");
-        if(official.getAddress()==null){
-            address.setText("No Address Provided");
-        } else {
-            address.setText(official.getAddress());
-            Linkify.addLinks(address, Linkify.MAP_ADDRESSES);
-            address.setLinkTextColor(Color.WHITE);
-        }
-        if(official.getPhone()==null){
-            phone.setText("No Phone Provided");
-        } else {
-            phone.setText(official.getPhone());
-            Linkify.addLinks(phone, Linkify.PHONE_NUMBERS);
-            phone.setLinkTextColor(Color.WHITE);
-        }
-        if(official.getEmail()==null){
-            email.setText("No Email Provided");
-        } else {
-            email.setText(official.getEmail());
-            Linkify.addLinks(email, Linkify.EMAIL_ADDRESSES);
-            email.setLinkTextColor(Color.WHITE);
-        }
-        if(official.getUrl()==null){
-            website.setText("No Website Provided");
-        } else {
-            website.setText(official.getUrl());
-            Linkify.addLinks(website, Linkify.WEB_URLS);
-            website.setLinkTextColor(Color.WHITE);
-        }
-        if(official.getFacebook()==null){
-            facebook.setVisibility(View.INVISIBLE);
-            facebook.setClickable(false);
-        }
-        if(official.getTwitter()==null){
-            twitter.setVisibility(View.INVISIBLE);
-            twitter.setClickable(false);
-        }
-        if(official.getGooglePlus()==null){
-            googleplus.setVisibility(View.INVISIBLE);
-            googleplus.setClickable(false);
-        }
-        if(official.getYouTube()==null){
-            youtube.setVisibility(View.INVISIBLE);
-            youtube.setClickable(false);
-        }
+        mapFields(official);
         if(official.getParty().contains("Republican")){
             appBackground.setBackgroundColor(Color.RED);
+      //      logo.setImageResource(R.drawable.rep_logo);
         } else if(official.getParty().contains("Democrat") || official.getParty().contains("Democratic")){
             appBackground.setBackgroundColor(Color.BLUE);
+//            logo.setImageResource(R.drawable.dem_logo);
         } else {
             appBackground.setBackgroundColor(Color.BLACK);
         }
     }
 
-    private void getOfficalPicture(){
+    private void mapFields(Official official) {
+        String address = official.getAddress();
+        String officialTwitter = official.getTwitter();
+        String officialPhone = official.getPhone();
+        String officialEmail = official.getEmail();
+        String officialUrl = official.getUrl();
+        String officialFacebook = official.getFacebook();
+        String officialGooglePlus = official.getGooglePlus();
+        String officialYouTube = official.getYouTube();
+
+        if(address ==null || address.isEmpty()){
+            this.address.setText("Address is null or empty");
+        } else {
+            this.address.setText(address);
+            Linkify.addLinks(this.address, Linkify.MAP_ADDRESSES);
+            this.address.setLinkTextColor(Color.WHITE);
+        }
+
+
+        if(officialPhone ==null || officialPhone.isEmpty()){
+            this.phone.setText("Phone is null or empty");
+        } else {
+            this.phone.setText(officialPhone);
+            Linkify.addLinks(this.phone, Linkify.PHONE_NUMBERS);
+            this.phone.setLinkTextColor(Color.WHITE);
+        }
+
+        if(officialEmail ==null|| officialEmail.isEmpty()){
+            this.email.setText(" Email is empty or null");
+        } else {
+            this.email.setText(officialEmail);
+            Linkify.addLinks(this.email, Linkify.EMAIL_ADDRESSES);
+            this.email.setLinkTextColor(Color.WHITE);
+        }
+
+        if(officialUrl ==null || officialUrl.isEmpty()){
+            website.setText("Website is empty or null");
+        } else {
+            website.setText(officialUrl);
+            Linkify.addLinks(website, Linkify.WEB_URLS);
+            website.setLinkTextColor(Color.WHITE);
+        }
+
+        if(officialFacebook ==null|| officialFacebook.isEmpty()){
+            this.facebook.setVisibility(View.INVISIBLE);
+            this.facebook.setClickable(false);
+        }
+
+        if(officialTwitter ==null){
+            this.twitter.setVisibility(View.INVISIBLE);
+            this.twitter.setClickable(false);
+        }
+
+        if(officialGooglePlus ==null){
+            googleplus.setVisibility(View.INVISIBLE);
+            googleplus.setClickable(false);
+        }
+
+        if(officialYouTube ==null){
+            youtube.setVisibility(View.INVISIBLE);
+            youtube.setClickable(false);
+        }
+    }
+
+    private void getOfficialPicture(){
         if (official.getPhotoUrl() != null) {
             Picasso picasso = new Picasso.Builder(this).listener(new Picasso.Listener() {
                 @Override
@@ -168,20 +194,20 @@ public class OfficialActivity extends AppCompatActivity {
 
     public void onFacebookClick(View v){
         String FACEBOOK_URL = "https://www.facebook.com/" + official.getFacebook();
-        String urlToUse;
+        String faceBookUrl;
         PackageManager packageManager = getPackageManager();
         try {
             int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
             if (versionCode >= 3002850) {
-                urlToUse = "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+                faceBookUrl = "fb://facewebmodal/f?href=" + FACEBOOK_URL;
             } else {
-                urlToUse = "fb://page/" + official.getFacebook();
+                faceBookUrl = "fb://page/" + official.getFacebook();
             }
         } catch (PackageManager.NameNotFoundException e) {
-            urlToUse = FACEBOOK_URL;
+            faceBookUrl = FACEBOOK_URL;
         }
         Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
-        facebookIntent.setData(parse(urlToUse));
+        facebookIntent.setData(parse(faceBookUrl));
         startActivity(facebookIntent);
     }
 

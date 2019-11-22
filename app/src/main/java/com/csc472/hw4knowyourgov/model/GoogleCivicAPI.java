@@ -41,19 +41,19 @@ public class GoogleCivicAPI  extends AsyncTask<String, Void, String> {
 
         if (s == null) {
             Toast.makeText(mainActivity, "Civic Info service is unavailable", Toast.LENGTH_SHORT).show();
-            mainActivity.setOfficialList(null);
+            mainActivity.updateOfficalList(null);
             return;
 
         } else if (s.isEmpty()) {
             Toast.makeText(mainActivity, "No data is available for the specified location", Toast.LENGTH_SHORT).show();
-            mainActivity.setOfficialList(null);
+            mainActivity.updateOfficalList(null);
             return;
 
         } else {
             parseJSON(s);
             results[0] = location;
             results[1] = officialResults;
-            mainActivity.setOfficialList(results);
+            mainActivity.updateOfficalList(results);
             return;
         }
     }
