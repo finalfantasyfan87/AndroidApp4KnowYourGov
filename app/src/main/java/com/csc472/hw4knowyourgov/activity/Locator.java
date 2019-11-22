@@ -89,7 +89,7 @@ public class Locator {
                 return;
             }
         }
-        mainActivity.noLocationAvailable();
+        mainActivity.showNoLocationToast();
         return;
     }
 

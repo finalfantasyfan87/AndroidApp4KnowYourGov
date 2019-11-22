@@ -1,6 +1,5 @@
 package com.csc472.hw4knowyourgov.model;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,21 +11,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GoogleCivicAPI  extends AsyncTask<String, Void, String> {
 
-    private static final String TAG = "CivicInfoDownloader";
+    private static final String TAG = "GoogleCivicAPI";
 
     private static final String API_KEY = "AIzaSyBSwoiBNOd6mOPi8ThzbFEUd6B5ZVsduyw";
 
-    private static final String CIVIC_INFO_URL = "https://www.googleapis.com/civicinfo/v2/representatives?key="+API_KEY+"&address=";
+    private static final String GOOGLE_CIVIC = "https://www.googleapis.com/civicinfo/v2/representatives?key="+API_KEY+"&address=";
 
     private final String noData = "There is no available Data";
 
@@ -65,45 +59,15 @@ public class GoogleCivicAPI  extends AsyncTask<String, Void, String> {
     }
     @Override
     protected String doInBackground(String... strings) {
-        String dataUrl = CIVIC_INFO_URL + strings[0];
+        String civicsURL = GOOGLE_CIVIC + strings[0];
 
 
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(CIVIC_INFO_URL+address, String.class);
-        Uri dataUri = Uri.parse(dataUrl);
-        String urlToUse = dataUri.toString();
-        Log.d(TAG, "doInBackground: " + urlToUse);
-
-        StringBuilder sb = new StringBuilder();
-        try {
-            URL url = new URL(urlToUse);
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            Log.d(TAG, "doInBackground: ResponseCode: " + conn.getResponseCode());
-
-            conn.setRequestMethod("GET");
-
-            InputStream is = conn.getInputStream();
-            BufferedReader reader = new BufferedReader((new InputStreamReader(is)));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "doInBackground: ", e);
-            return null;
-        }
-
-        Log.d(TAG, "doInBackground: " + sb.toString());
-        return sb.toString();
+        return restTemplate.getForObject(civicsURL, String.class);
     }
 
 
     private void parseJSON(String s) {
-        Log.d(TAG, "parseJSON: ");
-
         try {
             JSONObject jsonObject = new JSONObject(s);
 
@@ -112,7 +76,6 @@ public class GoogleCivicAPI  extends AsyncTask<String, Void, String> {
             String state = normalizedInputObject.getString("state");
             String zip = normalizedInputObject.getString("zip");
             location = city + ", " + state + " " + zip;
-            Log.d(TAG, "parseJSON: " + location);
 
 
             JSONArray officesArray = jsonObject.getJSONArray("offices");

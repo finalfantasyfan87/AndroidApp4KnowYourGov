@@ -43,7 +43,6 @@ public class OfficialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.official_activity);
-
         header = findViewById(R.id.location);
         office = findViewById(R.id.office);
         name = findViewById(R.id.name);
@@ -66,13 +65,12 @@ public class OfficialActivity extends AppCompatActivity {
         }
         if(intent.hasExtra("official")){
             official = (Official) intent.getSerializableExtra("official");
-            Log.d(TAG, "onCreate: "+official.toString());
-            setData(official);
-            loadImage();
+            mapOfficialFields(official);
+            getOfficalPicture();
         }
     }
 
-    private void setData(Official official){
+    private void mapOfficialFields(Official official){
         office.setText(official.getOffice());
         name.setText(official.getName());
         party.setText("("+official.getParty()+")");
@@ -129,12 +127,11 @@ public class OfficialActivity extends AppCompatActivity {
         }
     }
 
-    private void loadImage(){
+    private void getOfficalPicture(){
         if (official.getPhotoUrl() != null) {
             Picasso picasso = new Picasso.Builder(this).listener(new Picasso.Listener() {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                    // Try https if the http image attempt failed
                     final String changedUrl = official.getPhotoUrl().replace("http:", "https:");
                     picasso.load(changedUrl)
                             .fit()
@@ -165,7 +162,7 @@ public class OfficialActivity extends AppCompatActivity {
             photo.putExtra("header",header.getText().toString());
             startActivity(photo);
         } else{
-            Log.d(TAG, "openPhotoActivity: photoUrl is null or empty.");
+            Log.d(TAG, "There is no data to post in the Photo Activity.");
         }
     }
 

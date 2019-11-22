@@ -9,12 +9,10 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Official> listOfOfficials;
     private OfficialAdapter officialAdapter;
     private TextView location;
-    private String zipcode;
     private Locator locator;
     public static int LOCATION_CODE = 5;
 
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         location = findViewById(R.id.location);
         locator = new Locator(this);
         if(!amIConnected()){
-            noNetworkConnection();
+            showNoNetworkDialog();
         }
 
         listOfOfficials = new ArrayList<>();
@@ -89,25 +86,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.about:
-                Intent abt = new Intent(this, AboutActivity.class);
-                startActivity(abt);
-                return true;
-            case R.id.zipCode:
-                displayDialog();
-                return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     private void displayDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-        final EditText dialogText = new EditText(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText dialogText = new EditText(this);
         final MainActivity currentActivity = this;
         dialogText.setInputType(InputType.TYPE_CLASS_TEXT);
         dialogText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
@@ -116,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setView(dialogText);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                zipcode = dialogText.getText().toString();
-                new GoogleCivicAPI(currentActivity).execute(zipcode);
+                new GoogleCivicAPI(currentActivity).execute(dialogText.getText().toString());
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -131,18 +113,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
-    public void setOfficialList(Object[] parseJson) {
-        if(parseJson != null) {
-            zipcode = (String) parseJson[0];
+    public void setOfficialList(Object[] jsonResults) {
+        if(jsonResults != null) {
             listOfOfficials.clear();
-            ArrayList<Official> officialsParsed = (ArrayList<Official>) parseJson[1];
+            ArrayList<Official> officialsParsed = (ArrayList<Official>) jsonResults[1];
             listOfOfficials.addAll(officialsParsed);
-
             officialAdapter.notifyDataSetChanged();
-            location.setText(zipcode);
-            Log.d(TAG, "setOfficialList: "+ listOfOfficials.toString());
+            location.setText( (String) jsonResults[0]);
         } else {
-            noNetworkConnection();
+            showNoNetworkDialog();
         }
     }
 
@@ -169,23 +148,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         List<Address> locations;
         try {
             locations = new Geocoder(this, Locale.getDefault()).getFromLocation(latitude, longitude, 1);
-            zipcode = locations.get(0).getPostalCode();
-            new GoogleCivicAPI(this).execute(zipcode);
+            new GoogleCivicAPI(this).execute(locations.get(0).getPostalCode());
         } catch (IOException e) {
-            Toast.makeText(this, "Cannot Locate Address", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location Service cannot find results for the address", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void noLocationAvailable() {
-        Toast.makeText(this, "Location is unavailable", Toast.LENGTH_LONG).show();
-    }
 
     private boolean amIConnected(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return (connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null) != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
-    private void noNetworkConnection() {
+    private void showNoNetworkDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("No Network Connection");
         builder.setMessage("Data cannot Be accessed/loaded \nwithout an internet connection.");
@@ -194,7 +169,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
-
+    public void showNoLocationToast() {
+        Toast.makeText(this, "Location is unavailable", Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.about:
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
+                return true;
+            case R.id.zipCode:
+                displayDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     protected void onDestroy() {
         locator.shutdown();
