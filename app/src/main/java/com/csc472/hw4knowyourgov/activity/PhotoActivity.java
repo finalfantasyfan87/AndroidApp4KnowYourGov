@@ -21,6 +21,8 @@ public class PhotoActivity extends AppCompatActivity {
     private TextView header;
     private ImageView pic;
 
+    private ImageView logo;
+
     private ConstraintLayout background;
     private Official official;
     private String location;
